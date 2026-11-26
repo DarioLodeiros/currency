@@ -34,3 +34,31 @@ msgstr ""
 #: model:ir.model.fields.selection,name:currency_rate_update_xe.selection__res_currency_rate_provider__service__xe
 msgid "XE.com"
 msgstr ""
+
+#. module: currency_rate_update_xe
+#. odoo-python
+#: code:addons/currency_rate_update_xe/models/res_currency_rate_provider_XE.py:0
+#, python-format
+msgid "XE.com didn't return a rate for the base currency %s."
+msgstr ""
+
+#. module: currency_rate_update_xe
+#. odoo-python
+#: code:addons/currency_rate_update_xe/models/res_currency_rate_provider_XE.py:0
+#, python-format
+msgid "XE.com didn't return a rate for: %s."
+msgstr ""
+
+#. module: currency_rate_update_xe
+#. odoo-python
+#: code:addons/currency_rate_update_xe/models/res_currency_rate_provider_XE.py:0
+#, python-format
+msgid "XE.com returned HTTP %s. Please contact your administrator."
+msgstr ""
+
+#. module: currency_rate_update_xe
+#. odoo-python
+#: code:addons/currency_rate_update_xe/wizards/res_currency_rate_update_wizard.py:0
+#, python-format
+msgid "XE.com only provides today's rates, so rates for past dates can't be obtained. Remove the XE.com provider or use today's date."
+msgstr ""

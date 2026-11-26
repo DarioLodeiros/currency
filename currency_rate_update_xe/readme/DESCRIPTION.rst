@@ -1,5 +1,5 @@
 This module adds `XE.com <https://xe.com/>`_ currency exchange rates provider.
 
-Disclaimer: The rates are fetched by scraping the corresponding web page.
-Being a public page, it's legal according sentences like
-https://seointel.com/news/the-court-determines-that-data-scraping-is-legal-on-linkedin/
+Disclaimer: The rates are fetched from the JSON endpoint used by the public
+currency converter of xe.com. That endpoint is not an official API: it only
+provides the latest mid-market rates and it may change without notice.

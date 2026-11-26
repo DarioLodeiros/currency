@@ -2,7 +2,6 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import base64
-from datetime import date
 
 import requests
 
@@ -238,15 +237,15 @@ class ResCurrencyRateProviderXE(models.Model):
                 _("XE.com didn't return a rate for the base currency %s.")
                 % base_currency
             )
-        rates = {}
-        for currency in currencies:
-            if currency == base_currency:
-                continue
-            rate = api_rates.get(currency)
-            if rate:
-                # API rates are USD-based; make them relative to base_currency.
-                rates[currency] = rate / base_rate
-        return {date.today(): rates}
+        requested = [c for c in currencies if c != base_currency]
+        missing = [c for c in requested if not api_rates.get(c)]
+        if missing:
+            raise UserError(
+                _("XE.com didn't return a rate for: %s.") % ", ".join(missing)
+            )
+        # API rates are USD-based; make them relative to base_currency.
+        rates = {c: api_rates[c] / base_rate for c in requested}
+        return {fields.Date.context_today(self): rates}
 
     def _get_xe_rates(self):
         """Return the latest mid-market rates (USD-based) from XE.com."""
@@ -260,8 +259,13 @@ class ResCurrencyRateProviderXE(models.Model):
                 },
             )
             response.raise_for_status()
+            return response.json().get("rates", {})
+        except requests.HTTPError as e:
+            raise UserError(
+                _("XE.com returned HTTP %s. Please contact your administrator.")
+                % e.response.status_code
+            ) from e
         except Exception as e:
             raise UserError(
                 _("Couldn't fetch data. Please contact your administrator.")
             ) from e
-        return response.json().get("rates", {})

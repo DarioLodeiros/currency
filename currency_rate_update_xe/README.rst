@@ -30,9 +30,9 @@ Currency Rate Update: XE.com
 
 This module adds `XE.com <https://xe.com/>`_ currency exchange rates provider.
 
-Disclaimer: The rates are fetched by scraping the corresponding web page.
-Being a public page, it's legal according sentences like
-https://seointel.com/news/the-court-determines-that-data-scraping-is-legal-on-linkedin/
+Disclaimer: The rates are fetched from the JSON endpoint used by the public
+currency converter of xe.com. That endpoint is not an official API: it only
+provides the latest mid-market rates and it may change without notice.
 
 **Table of contents**
 
@@ -51,6 +51,13 @@ a currency rates providers.
    'Source Services' to choose.
 #. If you choose 'XE.com' as a 'Source Service', the exchange rates
    will be updated from that provider.
+
+XE.com only provides the current rates, so:
+
+* Set the provider as daily, so that the scheduled action stores the rate
+  of every day. Days without a successful run are left without a rate.
+* The *Update Rates* wizard refuses past dates when an XE.com provider is
+  selected.
 
 Bug Tracker
 ===========
